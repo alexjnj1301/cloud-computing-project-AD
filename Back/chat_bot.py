@@ -1,7 +1,8 @@
 import uuid
+from datetime import datetime
+
 from langchain.chat_models import init_chat_model
 from pydantic import BaseModel
-
 
 def get_api_key():
     return open("./api_key", "r").read().strip()
@@ -12,11 +13,13 @@ class ChatRequest(BaseModel):
     input_text: str
     chat_id: str
     conversation_history: list
+    time: str
 
 class ConversationHistory(BaseModel):
     chat_id: str
     role: str
     content: str
+    time: str
 
 def generate_chat_id():
     return str(uuid.uuid4()).replace("-", "")[:16]
@@ -26,13 +29,14 @@ def chat_with_bot(chat: ChatRequest):
         chat.conversation_history = []
 
     # update history
-    history = {"chat_id": chat.chat_id, "role": "user", "content": chat.input_text}
+    history = {"chat_id": chat.chat_id, "role": "user", "content": chat.input_text, "time": chat.time}
     chat.conversation_history.append(history)
 
     response = model.invoke(chat.conversation_history)
+    print(datetime.now().isoformat())
 
     # update history
-    history = {"chat_id": chat.chat_id, "role": "assistant", "content": response.content}
+    history = {"chat_id": chat.chat_id, "role": "assistant", "content": response.content, "time": datetime.now().isoformat()}
     chat.conversation_history.append(history)
 
     return response, chat.conversation_history
