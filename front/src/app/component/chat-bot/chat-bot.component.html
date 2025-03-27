@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="messages-display-part">
+    @if (messages.length > 0) {
+      @for (message of messages; track message.time) {
+        <div class="message-bubble" [ngClass]="message.role">
+          <div class="message-header">{{message.role === SENDER_USER ? 'Vous' : SENDER_BOT }} - <span class="date">{{message.time | date: 'hh:mm'}}</span></div>
+          {{message.content}}
+        </div>
+      }
+    } @else {
+	    <div class="no-message-to-display">
+		    No messages to display in this conversation
+	    </div>
+    }
+	  @if (isBotTyping) {
+		  <div class="message-bubble" [ngClass]="'user'">
+			  <div class="message-header">Vous - <span class="date">{{getDate() | date: 'hh:mm'}}</span></div>
+			  {{messageToSend?.input_text}}
+		  </div>
+		  <div class="message-bubble" [ngClass]="'assistant'">
+			  <div class="message-header">{{ SENDER_BOT }} - <span class="date">{{getDate() | date: 'hh:mm'}}</span></div>
+			  <div class="loader"></div>
+		  </div>
+	  }
+  </div>
+  <div class="dialog-part">
+    <mat-form-field appearance="outline" style="width: 90%;">
+      <input matInput type="text" placeholder="Entrez votre message ici..." [(ngModel)]="message" (keydown.enter)="message ? send() : ''">
+      <button matSuffix mat-icon-button aria-label="Send" (click)="send()" [disabled]="!message">
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>
