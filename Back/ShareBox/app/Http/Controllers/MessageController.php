@@ -27,11 +27,13 @@ class MessageController extends Controller
             'sender' => 'required|string|max:255',
             'content' => 'required|string',
             'chat_id' => 'required|integer',
+            'time' => 'required|string|max:255',
         ],
         [
             'sender.required' => 'The sender is required.',
             'content.required' => 'The content is required.',
             'chat_id.required' => 'The chat ID is required.',
+            'time.required' => 'The time is required.',
         ]);
 
         // Créer un nouveau message

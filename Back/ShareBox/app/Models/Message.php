@@ -18,6 +18,7 @@ class Message extends Model
         'sender',
         'content',
         'chat_id',
+        'time',
     ];
 
     public function chat()
