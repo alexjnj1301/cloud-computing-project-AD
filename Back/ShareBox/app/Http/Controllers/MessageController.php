@@ -22,24 +22,17 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        // Valider les données
-        $validated = $request->validate([
-            'sender' => 'required|string|max:255',
-            'content' => 'required|string',
-            'chat_id' => 'required|integer',
-            'time' => 'required|string|max:255',
-        ],
-        [
-            'sender.required' => 'The sender is required.',
-            'content.required' => 'The content is required.',
-            'chat_id.required' => 'The chat ID is required.',
-            'time.required' => 'The time is required.',
-        ]);
-
-        // Créer un nouveau message
-        $message = Message::create($validated);
-
-        return response()->json($message, 201);
+        $data = $request->all();
+        if (isset($data['objects']) && is_array($data['objects']) && count($data['objects']) > 0) {
+            foreach ($data['objects'] as $objectData) {
+                $object = new Message();
+                $object->fill($objectData);
+                $object->save();
+            }
+            return response()->json(['message' => 'Objets ajoutés avec succès'], 201);
+        } else {
+            return response()->json(['message' => 'Aucun objet à ajouter'], 400);
+        }
     }
 
     /**
@@ -59,7 +52,7 @@ class MessageController extends Controller
     {
         // Valider les données
         $validated = $request->validate([
-            'sender' => 'sometimes|required|string|max:255',
+            'role' => 'sometimes|required|string|max:255',
             'content' => 'sometimes|required|string',
             'chat_id' => 'sometimes|required|integer',
         ]);
