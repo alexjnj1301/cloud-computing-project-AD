@@ -18,3 +18,9 @@ export interface ChatResponse {
   },
   conversation_history: Message[]
 }
+
+export interface Chat {
+  id: number
+  chat_ref: string
+  user_id: number
+}
