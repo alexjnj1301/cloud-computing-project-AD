@@ -1,0 +1,25 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header class="card-header">
+      <mat-card-title class="title">Connexion</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="loginForm" class="login-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="login()" [disabled]="loginForm.invalid">
+        @if (isLoading) {
+          <div class="loader"></div>
+        } @else {
+          <p class="login-button">Connexion</p>
+        }
+      </button>
+    </form>
+    <a routerLink="/register" class="register">Pas de compte ? Inscrivez-vous</a>
+  </mat-card>
+</div>
