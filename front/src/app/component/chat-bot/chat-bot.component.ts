@@ -5,8 +5,9 @@ import { MatIcon } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms'
 import { HttpCallService } from '../../service/httpCallService'
 import { ChatResponse, Message, MessageToSend } from '../../models/Chat'
-import { SENDER_BOT, SENDER_USER } from '../../constants'
 import { DatePipe, NgClass } from '@angular/common'
+import { Constants } from '../../constants'
+
 
 @Component({
   selector: 'app-chat-bot',
@@ -29,10 +30,9 @@ export class ChatBotComponent {
   messages: Message[] = []
   messageToSend: MessageToSend | undefined
   isBotTyping: boolean = false
-  protected readonly SENDER_USER = SENDER_USER
-  protected readonly SENDER_BOT = SENDER_BOT
 
-  public constructor(private httpCallService: HttpCallService) {
+  public constructor(private httpCallService: HttpCallService,
+                     public constants: Constants) {
     this.generateChatId()
   }
 
