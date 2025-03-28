@@ -3,7 +3,7 @@
     @if (messages.length > 0) {
       @for (message of messages; track message.time) {
         <div class="message-bubble" [ngClass]="message.role">
-          <div class="message-header">{{message.role === SENDER_USER ? 'Vous' : SENDER_BOT }} - <span class="date">{{message.time | date: 'hh:mm'}}</span></div>
+          <div class="message-header">{{message.role === constants.SENDER_USER ? 'Vous' : constants.SENDER_BOT }} - <span class="date">{{message.time | date: 'hh:mm'}}</span></div>
           {{message.content}}
         </div>
       }
@@ -18,7 +18,7 @@
 			  {{messageToSend?.input_text}}
 		  </div>
 		  <div class="message-bubble" [ngClass]="'assistant'">
-			  <div class="message-header">{{ SENDER_BOT }} - <span class="date">{{getDate() | date: 'hh:mm'}}</span></div>
+			  <div class="message-header">{{ constants.SENDER_BOT }} - <span class="date">{{getDate() | date: 'hh:mm'}}</span></div>
 			  <div class="loader"></div>
 		  </div>
 	  }

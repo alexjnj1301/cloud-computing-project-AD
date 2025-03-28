@@ -22,3 +22,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-form-field-bottom-align {
   display: none;
 }
+
+.snackBar-error {
+  @include mat.snack-bar-overrides((
+    supporting-text-color: rgb(251, 62, 5),
+    button-color: white
+  ));
+}
+
+.snackBar-info {
+  @include mat.snack-bar-overrides((
+    container-color: white,
+    supporting-text-color: black,
+    button-color: #0078ac
+));
+}
