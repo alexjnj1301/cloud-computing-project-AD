@@ -13,3 +13,10 @@ export interface LoginResponse {
     lastname: string
   }
 }
+
+export interface RegisterRequest {
+  email: string
+  password: string
+  firstname: string
+  lastname: string
+}

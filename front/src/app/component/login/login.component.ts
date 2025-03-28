@@ -33,8 +33,8 @@ export class LoginComponent {
                      private router: Router,
                      private snackBarService: SnackBarService) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     })
   }
 
@@ -42,7 +42,6 @@ export class LoginComponent {
     this.isLoading = true
     this.httpCallService.login(this.loginForm.value).subscribe({
       next: (response: any) => {
-        console.log(response)
         this.httpCallService.setCurrentUser(response)
         this.router.navigate(['/home'])
         this.snackBarService.openInfoSnackBar('Connexion réussie')

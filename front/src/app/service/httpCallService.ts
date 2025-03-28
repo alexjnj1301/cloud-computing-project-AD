@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { ChatResponse, MessageToSend } from '../models/Chat'
-import { LoginRequest, LoginResponse } from '../models/Authent'
+import { LoginRequest, LoginResponse, RegisterRequest } from '../models/Authent'
 import { Constants } from '../constants'
 
 @Injectable({
@@ -14,6 +14,10 @@ export class HttpCallService {
 
   public login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>('http://localhost:8001/api/login', request)
+  }
+
+  public register(request: RegisterRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>('http://localhost:8001/api/register', request)
   }
 
   public setCurrentUser(currentUser: LoginResponse): void {
