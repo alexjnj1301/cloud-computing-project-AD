@@ -38,10 +38,10 @@ class MessageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($chat_id)
+    public function show($chat_ref)
     {
-        // Récupérer les messages pour un chat spécifique
-        $messages = Message::where('chat_id', $chat_id)->get();
+        $messages = Message::where('chat_ref', $chat_ref)->get();
+
         return response()->json($messages);
     }
 
