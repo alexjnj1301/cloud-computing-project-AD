@@ -6,12 +6,14 @@ export interface LoginRequest {
 export interface LoginResponse {
   access_token: string
   token_type: string
-  user: {
-    id: number
-    email: string
-    firstname: string
-    lastname: string
-  }
+  user: User
+}
+
+export interface User {
+  id: number
+  email: string
+  firstname: string
+  lastname: string
 }
 
 export interface RegisterRequest {
