@@ -1,0 +1,12 @@
+<h2>Créer une équipe</h2>
+<mat-dialog-content>
+  <p>Veuillez entrer le nom de la nouvelle équipe.</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Nom de l'équipe</mat-label>
+    <input matInput [(ngModel)]="teamName" required>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="createTeam()">Créer</button>
+</mat-dialog-actions>

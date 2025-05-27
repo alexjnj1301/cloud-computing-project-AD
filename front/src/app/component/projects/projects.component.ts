@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpCallService } from '../../service/httpCallService'
 import { Projects } from '../../models/Projects'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, RouterLink } from '@angular/router'
 import { MatCard } from '@angular/material/card'
 import { FileUploaderComponent } from '../file-uploader/file-uploader.component'
+import { MatMiniFabButton } from '@angular/material/button'
+import { MatIcon } from '@angular/material/icon'
 
 @Component({
   selector: 'app-projects',
   imports: [
     MatCard,
     FileUploaderComponent,
+    MatMiniFabButton,
+    MatIcon,
+    RouterLink,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'

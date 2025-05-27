@@ -1,7 +1,7 @@
 <h2>Teams</h2>
 
 <div class="add-team">
-  <button mat-fab extended>
+  <button mat-fab extended (click)="createTeam()">
     <mat-icon>group_add</mat-icon>
     Créer une nouvelle équipe
   </button>
@@ -20,7 +20,15 @@
             <mat-icon>group</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <h3>Projects:</h3>
+        <div class="vasy">
+          <h3>Projects:</h3>
+          <div class="add-project">
+            <button mat-fab extended (click)="createProject(team.id)">
+              <mat-icon>add</mat-icon>
+              Ajouter un projet
+            </button>
+          </div>
+        </div>
         <div class="projects-container">
           @if (team.projects.length === 0) {
             <p>No projects available for this team.</p>

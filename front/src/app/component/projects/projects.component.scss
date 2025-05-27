@@ -6,6 +6,15 @@
   height: 5vw;
 }
 
+.goBack {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 10vw;
+  height: 5vw;
+  gap: 1rem;
+}
+
 .uploader {
   margin: 3rem;
 

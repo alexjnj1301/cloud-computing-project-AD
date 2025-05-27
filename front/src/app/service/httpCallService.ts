@@ -77,4 +77,20 @@ export class HttpCallService {
   public getProjectById(projectId: string): Observable<Projects> {
     return this.http.get<Projects>(`${this.laravelApiUrl}/api/project/show/${projectId}`)
   }
+
+  public createTeam(teamName: string): Observable<string> {
+    const request = {
+      name: teamName
+    }
+    return this.http.post<string>(`${this.laravelApiUrl}/api/team/store`, request)
+  }
+
+  public createProject(projectName: string, teamId: number): Observable<string> {
+    const request = {
+      name: projectName,
+      team_id: teamId,
+      user_id: this.getCurrentUser().id
+    }
+    return this.http.post<string>(`${this.laravelApiUrl}/api/project/store`, request)
+  }
 }

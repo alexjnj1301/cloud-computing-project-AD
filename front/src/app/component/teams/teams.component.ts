@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Teams } from '../../models/Teams'
 import { MatFabButton } from '@angular/material/button'
 import { MatIcon } from '@angular/material/icon'
@@ -12,6 +12,9 @@ import {
 import { MatCard } from '@angular/material/card'
 import { HttpCallService } from '../../service/httpCallService'
 import { RouterLink } from '@angular/router'
+import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { CreateTeamDialogComponent } from '../Dialogs/create-team-dialog/create-team-dialog.component'
+import { CreateProjectDialogComponent } from '../Dialogs/create-project-dialog/create-project-dialog.component'
 
 @Component({
   selector: 'app-teams',
@@ -31,6 +34,7 @@ import { RouterLink } from '@angular/router'
 })
 export class TeamsComponent implements OnInit {
   public teams: Teams[] = []
+  public dialog = inject(MatDialog)
 
   public constructor(private httpCallService: HttpCallService) {
   }
@@ -43,7 +47,6 @@ export class TeamsComponent implements OnInit {
     this.httpCallService.getTeams().subscribe({
       next: (teams) => {
         this.teams = teams;
-        //for each team, get the projects of the team
         for (let team of this.teams) {
           this.httpCallService.getProjectsByTeam(team.id).subscribe({
             next: (projects) => {
@@ -58,6 +61,16 @@ export class TeamsComponent implements OnInit {
       error: (error) => {
         console.error('Error fetching teams:', error);
       }
+    })
+  }
+
+  public createTeam() {
+    this.dialog.open(CreateTeamDialogComponent)
+  }
+
+  public createProject(id: number) {
+    this.dialog.open(CreateProjectDialogComponent, {
+      data: { teamId: id }
     })
   }
 }
