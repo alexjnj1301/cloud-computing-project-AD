@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\FileUploadController;
 
 define('AUTH', 'auth:sanctum');
 
@@ -42,3 +43,5 @@ Route::group(['prefix' => 'message', 'middleware' => AUTH], function () {
     Route::patch('/update/{id}', [MessageController::class, 'update']);
     Route::delete('/destroy/{id}', [MessageController::class, 'destroy']);
 });
+
+Route::post('upload', [FileUploadController::class, 'uploadFile']);
