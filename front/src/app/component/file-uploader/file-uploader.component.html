@@ -1,0 +1,29 @@
+<div matRipple class="container" (click)="triggerFileInput()">
+  AJOUTER UN FICHIER A ENVOYER
+  <input #fileInput type="file" class="file-input" (change)="onChange($event)" style="display: none" />
+</div>
+
+@if (sending) {
+  <mat-progress-bar class="progress-bar" mode="determinate" [value]="(filesSent / filesToSend) * 100"></mat-progress-bar>
+}
+
+@if (files.length > 0) {
+  <div class="send-file-container">
+    <div class="file-item-container">
+      @for (file of files; track file.name) {
+        <div class="file-item">
+          <span class="file-name">{{ file.name }}</span>
+          <button mat-icon-button (click)="removeFile(file)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+    <div class="buttons-container">
+      <button mat-fab extended (click)="sendFile(files)">
+        <mat-icon>send</mat-icon>
+        Envoyer
+      </button>
+    </div>
+  </div>
+}
