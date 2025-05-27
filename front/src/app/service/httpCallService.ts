@@ -5,6 +5,8 @@ import { Chat, ChatResponse, Message, MessageToSend } from '../models/Chat'
 import { LoginRequest, LoginResponse, RegisterRequest, User } from '../models/Authent'
 import { Constants } from '../constants'
 import { environment } from '../environments/environment'
+import { Teams } from '../models/Teams'
+import { Projects } from '../models/Projects'
 
 @Injectable({
   providedIn: 'root'
@@ -56,9 +58,23 @@ export class HttpCallService {
     return this.http.get<Message[]>(`${this.laravelApiUrl}/api/message/${chat_ref}`)
   }
 
-  public sendFile(file: File): Observable<any> {
+  public sendFile(file: File, projectId: string): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('project_id', projectId);
+    formData.append('user_id', this.getCurrentUser().id.toString());
     return this.http.post(`${this.laravelApiUrl}/api/upload`, formData);
+  }
+
+  public getTeams(): Observable<Teams[]> {
+    return this.http.get<Teams[]>(`${this.laravelApiUrl}/api/team/byUser/${this.getCurrentUser().id}`)
+  }
+
+  public getProjectsByTeam(teamId: number): Observable<Projects[]> {
+    return this.http.get<Projects[]>(`${this.laravelApiUrl}/api/project/byTeam/${teamId}`)
+  }
+
+  public getProjectById(projectId: string): Observable<Projects> {
+    return this.http.get<Projects>(`${this.laravelApiUrl}/api/project/show/${projectId}`)
   }
 }

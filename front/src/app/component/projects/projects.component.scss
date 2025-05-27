@@ -1,0 +1,23 @@
+.files-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vw;
+  height: 5vw;
+}
+
+.uploader {
+  margin: 3rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}

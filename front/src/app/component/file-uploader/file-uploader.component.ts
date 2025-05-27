@@ -6,6 +6,7 @@ import { MatIcon } from '@angular/material/icon'
 import { MatFabButton, MatIconButton } from '@angular/material/button'
 import { HttpCallService } from '../../service/httpCallService'
 import { MatProgressBar } from '@angular/material/progress-bar'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-file-uploader',
@@ -26,8 +27,11 @@ export class FileUploaderComponent {
   public filesToSend: number = 0
   public filesSent: number = 0
   public fileInError: File[] = []
+  public projectId: string = ''
 
-  public constructor(public httpCallService: HttpCallService) {
+  public constructor(public httpCallService: HttpCallService,
+                     private route: ActivatedRoute) {
+    this.projectId = this.route.snapshot.paramMap.get('id')!
   }
 
   public triggerFileInput() {
@@ -60,18 +64,20 @@ export class FileUploaderComponent {
   }
 
   public sendFile(files: File[]) {
-    console.log('Sending files:', files)
     this.sending = true
     let nbErrors: number = 0
     this.filesToSend = files.length
     this.filesSent = 0
 
     for (const file of files) {
-      this.httpCallService.sendFile(file).subscribe({
-        next: (response: any) => {
-          console.log('Files sent successfully:', response)
+      this.httpCallService.sendFile(file, this.projectId).subscribe({
+        next: () => {
           this.files = this.files.filter(f => f !== file)
           this.filesSent++
+          if (this.filesSent === this.filesToSend) {
+            this.sending = false
+            window.location.reload()
+          }
         },
         error: (error: any) => {
           console.error('Error sending files:', error)
@@ -79,10 +85,6 @@ export class FileUploaderComponent {
           this.fileInError.push(file)
         }
       })
-    }
-
-    if (this.filesSent === this.filesToSend) {
-      this.sending = false
     }
   }
 }
