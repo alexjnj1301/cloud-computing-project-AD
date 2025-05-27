@@ -1,0 +1,14 @@
+<h2>Project</h2>
+<h4>Documents du projet {{project?.name}}</h4>
+
+<div class="cards-container">
+  @for (file of project?.files; track file.id) {
+    <mat-card class="files-card">
+      <a href="{{file.path}}"> {{file.name}} </a>
+    </mat-card>
+  }
+</div>
+
+<div class="uploader">
+  <app-file-uploader/>
+</div>

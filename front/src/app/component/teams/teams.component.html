@@ -1,0 +1,41 @@
+<h2>Teams</h2>
+
+<div class="add-team">
+  <button mat-fab extended>
+    <mat-icon>group_add</mat-icon>
+    Créer une nouvelle équipe
+  </button>
+</div>
+
+@if (teams.length === 0) {
+  <p>No teams available.</p>
+} @else {
+  <mat-accordion class="panels-container" multi>
+    @for (team of teams; track team.id) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ team.name }}</mat-panel-title>
+          <mat-panel-description style="justify-content: space-between">
+            Voir les projets de cette équipe
+            <mat-icon>group</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h3>Projects:</h3>
+        <div class="projects-container">
+          @if (team.projects.length === 0) {
+            <p>No projects available for this team.</p>
+          } @else {
+            @for (project of team.projects; track project.id) {
+              <mat-card class="project-card">
+                <a [routerLink]="['/project', project.id]">
+                  <mat-icon>folder</mat-icon>
+                  {{ project.name }}
+                </a>
+              </mat-card>
+            }
+          }
+        </div>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+}

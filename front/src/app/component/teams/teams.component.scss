@@ -1,0 +1,35 @@
+.panels-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  width: 95vw;
+  gap: 0.5rem;
+}
+
+.add-team {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.projects-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.project-card {
+  width: 10vw;
+  height: 4vh;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(0.8);
+  }
+}
