@@ -60,6 +60,7 @@ Route::group(['prefix' => 'team', 'middleware' => AUTH], function () {
 Route::group(['prefix' => 'project', 'middleware' => AUTH], function () {
     Route::get('/index', [ProjectController::class, 'index']);
     Route::post('/store', [ProjectController::class, 'store']);
+    Route::get('/show/{id}', [ProjectController::class, 'show']);
     Route::get('/byTeam/{teamId}', [ProjectController::class, 'projectsByTeamId']);
 });
 
