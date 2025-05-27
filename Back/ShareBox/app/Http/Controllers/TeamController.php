@@ -82,9 +82,9 @@ class TeamController extends Controller
     {
         $teams = Team::whereHas('users', function ($query) use ($userId) {
             $query->where('user_id', $userId);
-        })->get();
+        })->with('projects')->get();
 
-        return response()->json($teams);
+        return response()->json($teams->values());
     }
 
     // add user to team
