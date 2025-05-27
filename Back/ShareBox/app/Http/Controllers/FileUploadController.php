@@ -18,7 +18,13 @@ class FileUploadController extends Controller
      {
         $request->validate([
             'file' => 'required|file|mimes:jpg,jpeg,png,pdf,docx|max:10240',
+            'project_id' => 'required|integer',
+            'user_id' => 'required|integer',
         ]);
+
+        $originalName = $request->file('file')->getClientOriginalName();
+        $name = pathinfo($originalName, PATHINFO_FILENAME);
+        $type = pathinfo($originalName, PATHINFO_EXTENSION);
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
@@ -31,6 +37,18 @@ class FileUploadController extends Controller
             }
 
             $url = Storage::disk('s3')->url($path);
+
+            $requestData = [
+                'name' => $name,
+                'project_id' => $request->input('project_id'),
+                'user_id' => $request->input('user_id'),
+                'type' => $type,
+                'path' => $url,
+            ];
+
+            // Instancier FileController et appeler store
+            $fileController = new \App\Http\Controllers\FileController();
+            $file = $fileController->store(new \Illuminate\Http\Request($requestData));
 
             return response()->json([
                 'message' => 'Fichier uploadé avec succès !',

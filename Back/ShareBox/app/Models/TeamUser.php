@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Team extends Model
+class TeamUser extends Model
 {
     use HasFactory;
 
@@ -15,18 +15,17 @@ class Team extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'picture',
+        'user_id',
+        'team_id',
     ];
 
-    public function projects()
+    public function teams()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Team::class);
     }
 
     public function users()
     {
-        return $this->hasMany(TeamUser::class);
+        return $this->hasMany(User::class);
     }
-
 }

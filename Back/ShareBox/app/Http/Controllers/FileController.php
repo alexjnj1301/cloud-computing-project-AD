@@ -12,7 +12,8 @@ class FileController extends Controller
      */
     public function index()
     {
-        //
+        $files = File::all();
+        return response()->json($files);
     }
 
     /**
@@ -28,7 +29,23 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'project_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'type' => 'required|string|max:255',
+            'path' => 'required|string|max:1024',
+        ], [
+            'name.required' => 'The name is required.',
+            'project_id.required' => 'The project ID is required.',
+            'user_id.required' => 'The user ID is required.',
+            'type.required' => 'The type is required.',
+            'path.required' => 'The path is required.',
+        ]);
+
+        $file = File::create($validated);
+
+        return response()->json($file, 201);
     }
 
     /**
@@ -60,6 +77,14 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        $file->delete();
+        return response()->json(null, 204);
+    }
+
+    // get file by project_id
+    public function getFilesByProjectId($projectId)
+    {
+        $files = File::where('project_id', $projectId)->get();
+        return response()->json($files);
     }
 }
