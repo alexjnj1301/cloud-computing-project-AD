@@ -12,7 +12,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+        return response()->json($projects);
     }
 
     /**
@@ -28,7 +29,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'team_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'picture' => 'nullable|string|max:255',
+        ],
+        [
+            'name.required' => 'The project name is required.',
+            'team_id.required' => 'The team ID is required.',
+            'user_id.required' => 'The user ID is required.',
+        ]);
+
+        $project = Project::create($validated);
+
+        return response()->json($project, 201);
     }
 
     /**
@@ -61,5 +76,12 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    // projects by team_id
+    public function projectsByTeamId($teamId)
+    {
+        $projects = Project::where('team_id', $teamId)->get();
+        return response()->json($projects);
     }
 }

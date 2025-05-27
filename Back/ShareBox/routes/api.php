@@ -6,6 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TeamController;
 
 define('AUTH', 'auth:sanctum');
 
@@ -44,4 +47,27 @@ Route::group(['prefix' => 'message', 'middleware' => AUTH], function () {
     Route::delete('/destroy/{id}', [MessageController::class, 'destroy']);
 });
 
-Route::post('upload', [FileUploadController::class, 'uploadFile']);
+Route::group(['prefix' => 'team', 'middleware' => AUTH], function () {
+    Route::get('/index', [TeamController::class, 'index']);
+    Route::post('/store', [TeamController::class, 'store']);
+    Route::get('/byUser/{userId}', [TeamController::class, 'teamByUserId']);
+    Route::post('/addUser/{teamId}', [TeamController::class, 'addUserToTeam']);
+    Route::get('/users/{teamId}', [TeamController::class, 'getUsersByTeamId']);
+    Route::post('/removeUser/{teamId}', [TeamController::class, 'removeUserFromTeam']);
+    Route::get('/listProjects/{teamId}', [TeamController::class, 'projectsByTeamId']);
+});
+
+Route::group(['prefix' => 'project', 'middleware' => AUTH], function () {
+    Route::get('/index', [ProjectController::class, 'index']);
+    Route::post('/store', [ProjectController::class, 'store']);
+    Route::get('/byTeam/{teamId}', [ProjectController::class, 'projectsByTeamId']);
+});
+
+Route::group(['prefix' => 'file', 'middleware' => AUTH], function () {
+    Route::get('/index', [FileController::class, 'index']);
+    Route::post('/store', [FileController::class, 'store']);
+    Route::delete('/destroy/{file}', [FileController::class, 'destroy']);
+    Route::get('/byProject/{projectId}', [FileController::class, 'getFilesByProjectId']);
+});
+
+Route::post('upload', [FileUploadController::class, 'uploadFile'])->middleware(AUTH)->name('upload.file');
