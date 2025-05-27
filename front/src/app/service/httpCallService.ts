@@ -55,4 +55,10 @@ export class HttpCallService {
   public getMessagesByChatRef(chat_ref: string): Observable<Message[]> {
     return this.http.get<Message[]>(`${this.laravelApiUrl}/api/message/${chat_ref}`)
   }
+
+  public sendFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(`${this.laravelApiUrl}/api/upload`, formData);
+  }
 }
